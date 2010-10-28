@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "CSProcessor.h"
+#include "SpecialCommand.h"
 
 void JabberTerminal::start() {
 	proc->start();
@@ -110,10 +111,27 @@ void JabberTerminal::handleMessage(const Message& stanza,
             MessageSession* session)
 {
 	std::string toWr = stanza.body();
-	toWr.append(1,'\n');
-	//printf("toWrite:'%s'\n",toWr.c_str());
-	proc->write((char*)toWr.c_str(),toWr.length());
-	proc->flush();
+	if(toWr.length() > 2 && toWr[0] == '#' && toWr[1] == '>')
+	{
+		printf("Special command handled\n");
+		SpecialCommand scmd(toWr.substr(2,toWr.length()-2));
+		printf("cmd: '%s', args[0]: '%s'\n",scmd.getCmd().c_str(),scmd.getArgs().front().c_str());
+		try
+		{
+			scmd.execute(*this);
+		}
+		catch(SystemException & e)
+		{
+			session->send(e.what());
+		}
+	}
+	else
+	{
+		toWr.append(1,'\n');
+		//printf("toWrite:'%s'\n",toWr.c_str());
+		proc->write((char*)toWr.c_str(),toWr.length());
+		proc->flush();
+	}
 }
 
 JabberTerminal::~JabberTerminal() {

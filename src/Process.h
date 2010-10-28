@@ -19,6 +19,8 @@ protected:
 	void exec_child() throw(SystemException);
 public:
 	Process(const Config & conf);
+	virtual ~Process();
+
 	virtual void start() throw(SystemException) = 0;
 	virtual void stop() throw(SystemException);
 	virtual void restart() throw(SystemException){};
@@ -26,8 +28,8 @@ public:
 	virtual int write(char * buf, size_t count) throw(SystemException) = 0;
 	virtual void flush() = 0;
 
-	const Config & getConfig(){return config;}
-	virtual ~Process();
+	const Config & getConfig() const {return config;}
+	pid_t getPid() const {return cpid;}
 };
 
 #endif /* PROCESS_H_ */

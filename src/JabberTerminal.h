@@ -27,13 +27,21 @@ protected:
 	Process * proc;
 	static void* _run_method(void * jsh);
 	pthread_t workThread;
+
+protected:
+	virtual void handleMessage(const Message& stanza,
+		            MessageSession* session = 0);
+
 public:
 	JabberTerminal(Config & cfg, Process * _proc);
+	virtual ~JabberTerminal();
+
 	void start();
 	void stop();
-	virtual void handleMessage(const Message& stanza,
-	            MessageSession* session = 0);
-	virtual ~JabberTerminal();
+
+	const Config & getConfig() const {return config;}
+	Process * getProcess() {return proc;}
+	const MessageSession * getMessageSession() const {return session;}
 };
 
 #endif /* JABBERSHELL_H_ */

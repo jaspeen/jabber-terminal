@@ -1,6 +1,6 @@
 CXXFLAGS =	-O2 -g -Wall -fmessage-length=0
 
-OBJS =		src/main.o src/Base64.o src/Config.o src/CSProcessor.o src/JabberTerminal.o src/Process.o src/PipeProcess.o src/SystemException.o src/TerminalProcess.o
+OBJS =		src/main.o src/Base64.o src/Config.o src/CSProcessor.o src/JabberTerminal.o src/Process.o src/PipeProcess.o src/SystemException.o src/TerminalProcess.o src/SpecialCommand.o
 
 LIBS =	-lgloox -lutil -lpthread
 
