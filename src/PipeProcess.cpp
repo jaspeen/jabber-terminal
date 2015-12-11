@@ -7,6 +7,7 @@
 
 #include "PipeProcess.h"
 #include <stdio.h>
+#include <unistd.h>
 
 PipeProcess::PipeProcess(const Config & conf):
 Process(conf) {
